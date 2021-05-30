@@ -27,7 +27,16 @@ function convertValue(numVal){
   return convertNum;
 }
 
+function isPrime(num) {
+  if(num < 2) return false;
 
+  for (let k = 2; k < num; k++){
+    if( num % k === 0){
+      return false;
+    }
+  }
+  return true;
+}
 
 test('Hello', () => {
   expect(sayHello("Hello")).toEqual("Hello");
@@ -35,4 +44,8 @@ test('Hello', () => {
 
 test('Convert Value', () => {
   expect(convertValue(70)).toEqual("B");
+});
+
+test('Check Prime Number', () => {
+  expect(isPrime(2)).toEqual(true);
 });
