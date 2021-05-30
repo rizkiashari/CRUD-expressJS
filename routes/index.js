@@ -134,11 +134,21 @@ router.get("/edit/(:idKegiatan)", (req, res) => {
 });
 
 router.post("/update", (req, res) => {
-  const { nameKegiatan, desc, statusId, gambar, userId, tgl, id} = req.body;
+  let today = new Date().toISOString().slice(0, 19).replace('T', ' ');
+  console.log(today);
+  const updateData = {
+    nameKegiatan: req.body.nameKegiatan,
+    desc: req.body.desc,
+    statusId: req.body.statusId,
+    gambar: req.body.gambar,
+    userId: req.body.userId,
+    tgl: today,
+    id: req.body.id,
+  };
 
   let error = false;
 
-  if (!nameKegiatan.length || !desc.length || !statusId.length || !gambar.length || !userId.length || !tgl.length) {
+  if (!updateData.nameKegiatan.length || !updateData.desc.length || !updateData.statusId.length || !updateData.gambar.length || !updateData.userId.length || updateData.tgl === null) {
     error = true;
     req.flash("error", "Semua data harus di isi!!");
     res.render("schedule/edit", { nameKegiatan, desc, statusId, gambar, userId, tgl });
@@ -146,21 +156,28 @@ router.post("/update", (req, res) => {
 
   if (!error) {
     const formData = {
-      nameKegiatan: nameKegiatan,
-      desc_kegiatan: desc,
-      idStatus: statusId,
-      gambar: gambar,
-      idUser: userId,
-      tanggalKegiatan: tgl,
+      nameKegiatan: updateData.nameKegiatan,
+      desc_kegiatan: updateData.desc,
+      idStatus: updateData.statusId,
+      gambar: updateData.gambar,
+      idUser: updateData.userId,
+      tanggalKegiatan: updateData.tgl,
     }
   
     dbConnection.query("UPDATE kegiatan SET ? WHERE idKegiatan = "+id, formData, (error) => {
       if (error) {
+        console.log(id);
         req.flash("error datanya", error)
       } else {
         req.flash("success", "Berhasil Edit Schedule");
         // req.flash("error", "Semua data harus di isi!!");
-        res.render("schedule/edit", { nameKegiatan, desc, statusId, gambar, userId, tgl});
+        res.render("schedule/edit", {
+          nameKegiatan: updateData.nameKegiatan, desc: updateData.desc,
+          statusId: updateData.statusId,
+          gambar: updateData.gambar,
+          userId: updateData.userId,
+          tgl: updateData.tgl,
+        });
         res.redirect("/schedule");
       }
     })
