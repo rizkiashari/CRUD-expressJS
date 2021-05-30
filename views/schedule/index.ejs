@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule | Sche App</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+
+    <!-- JavaScript Bundle with Popper -->
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <%- include('../../component/header') %>
+    <h1 class="title-me mt-3 mb-4">List Schedule</h1>
+    <%
+      if(messages.success){
+        %>
+          <h1 class="success container mb-2">
+            <%= messages.success %>
+          </h1>
+        <%
+      }
+    %>
+    <div class="sche">
+      <a href="/schedule/add" class="btn-me btn-primary">Add Schedule</a>
+    </div>
+    <div class="container card-container mt-10">
+      <% data.forEach((item) => { 
+          %>
+            <div class="card">
+              <img src="<%= item.gambar%>" alt="">
+              <div class="card-body">
+                <h3><%= item.name	%></h3>
+                <p><%= item.description %></p>
+              </div>
+              <div class="riwayat">
+                <a href="/schedule/edit/<%= item.id %>" class="btn-me-2">
+                  <%= item.name %>
+                </a>
+                <div class="content">
+                  <p >
+                    <% const newDate = new Date(item.tgl)%>
+                    <%= 
+                      newDate.getDate() +"/" + (newDate.getMonth()+1) +  "/"+
+                      newDate.getFullYear()
+                    %>
+                  </p>
+                </div>
+              </div>
+              <div class="delete">
+                <a href="/schedule/delete/<%= item.id %>" onclick="return confirm(`Apakah yakin menghapus schedule <%= item.name %>?`)">Delete Schedule</a>
+              </div>
+            </div>
+          <% 
+        })
+      %>
+    </div>
+
+    <%- include('../../component/footer') %>
+  </body>
+</html>
