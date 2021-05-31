@@ -35,7 +35,8 @@ router.post("/auth-login", (req, res) => {
     }
     else {
       bcrypt.compare(password, data[0].password, function (error, result) {
-        if (error) {
+        
+        if (!result) {
           req.flash("error", "Email atau password salah");
           res.render("auth/login", {
             email, password: ""
