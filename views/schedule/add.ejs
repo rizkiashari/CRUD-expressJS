@@ -31,7 +31,13 @@
       </div>
       <div class="mb-3">
         <label for="" class="form-label">Status</label>
-        <input value="<%= statusId %>"  name="statusId" type="number" class="form-control" id="" placeholder="Status anda" >
+        <select name="statusId" class="form-control">
+          <% statusUser.forEach(status=> { %>
+              <option value="<%=status.idStatus%>">
+                  <%= status.name %>
+              </option>
+              <% }) %>
+      </select>
       </div>
       <div class="mb-3">
         <label for="" class="form-label">Gambar</label>
@@ -43,7 +49,13 @@
       </div>
       <div class="mb-3">
         <label for="" class="form-label">Nama anda</label>
-        <input  value="<%= userId %>" name="userId" type="number" class="form-control" id="" placeholder="nama anda" >
+        <select name="userId" class="form-control">
+          <% user.forEach(users=> { %>
+            <option value="<%=users.idUser%>">
+                <%= users.name %>
+            </option>
+            <% }) %>
+        </select>
       </div>
       <% 
       if(messages.error){

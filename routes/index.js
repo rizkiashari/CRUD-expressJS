@@ -10,7 +10,8 @@ router.get('/', function(req, res, next) {
             jk.desc_kegiatan as description,
             jk.gambar	as gambar,
             jk.tanggalKegiatan as tgl,
-            st.name as name
+            st.name as name,
+            st.idStatus as idStatus
     FROM kegiatan jk JOIN status st
     ON jk.idStatus  = st.idStatus 
     ORDER BY idKegiatan DESC
