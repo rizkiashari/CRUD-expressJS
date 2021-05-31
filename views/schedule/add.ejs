@@ -21,17 +21,18 @@
     <form action="/schedule/store" method="POST" class="container">
       <div class="mb-3">
         <label for="" class="form-label" >Nama Kegiatan</label>
-        <input value="<%= nameKegiatan %>" name="nameKegiatan" type="text" class="form-control" id="" placeholder="Kegiatan Anda">
+        <input value="<%=nameKegiatan%>" name="nameKegiatan" type="text" class="form-control" id="" placeholder="Kegiatan Anda">
       </div>
       <div class="mb-3">
         <label for="" class="form-label">Deskripsi</label>
         <textarea name="desc" id="" class="form-control" placeholder="deskripsi anda" >
-         <%= desc %>
+         <%=desc%>
         </textarea>
       </div>
       <div class="mb-3">
         <label for="" class="form-label">Status</label>
         <select name="statusId" class="form-control">
+          <option value=""></option>
           <% statusUser.forEach(status=> { %>
               <option value="<%=status.idStatus%>">
                   <%= status.name %>
@@ -41,15 +42,16 @@
       </div>
       <div class="mb-3">
         <label for="" class="form-label">Gambar</label>
-        <input value="<%= gambar %>"  name="gambar" type="text" class="form-control" id="" placeholder="masukkan gambar" >
+        <input value="<%=gambar%>"  name="gambar" type="text" class="form-control" id="" placeholder="masukkan gambar" >
       </div>
       <div class="mb-3">
         <label for="" class="form-label">Tanggal Kegiatan</label>
-        <input name="tgl" type="date" class="form-control" id="" value="<%= tgl %>">
+        <input name="tgl" type="date" class="form-control" id="" value="<%=tgl%>">
       </div>
       <div class="mb-3">
         <label for="" class="form-label">Nama anda</label>
         <select name="userId" class="form-control">
+          <option value=""></option>
           <% user.forEach(users=> { %>
             <option value="<%=users.idUser%>">
                 <%= users.name %>
