@@ -9,35 +9,41 @@ router.get("/", (req, res) => {
 })
 
 router.get("/login", (req, res) => {
-  res.render("auth/login", {
-    email: "",
-    password: "",
-  });
+  const isUser = true;
+  if (isUser) {
+    res.render("auth/login", {
+      email: "",
+      password: "",
+    });
+  } else {
+    res.send("Gagal Login");
+  }
+  
 });
 
 router.post("/auth-login", (req, res) => {
-  const { email, password } = req.body;
-  
-  let error = false;
+  let { email, password } = req.body;
 
   if (!email.length || !password.length) {
-    error = true;
     req.flash("error", "Silahkan isi semua data!!!");
     res.render("auth/login", {
        email, password: "",
     });
   }
 
-  dbConnection.query(`SELECT * FROM user WHERE email = ${'email'}`, (error, data) => {
-    if (error) {
-      req.flash("error", "Email atau password salah");
+  dbConnection.query(`SELECT * FROM user WHERE email = ?`, email, (error, data) => {
+    if (error) throw error;
+
+    if (!data.length) {
+      req.flash("error", "Email anda salah");
       res.render("auth/login", { email , password: ""});
     }
     else {
-      bcrypt.compare(password, data[0].password, function (error, result) {
-        
+      bcrypt.compare(password, data[0].password, (err, result) => {
+        if (err) throw err;
+
         if (!result) {
-          req.flash("error", "Email atau password salah");
+          req.flash("error", "Password salah");
           res.render("auth/login", {
             email, password: ""
           });
@@ -48,7 +54,6 @@ router.post("/auth-login", (req, res) => {
       });
     }
   })
-
 });
 
 router.get("/register", (req, res) => {

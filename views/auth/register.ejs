@@ -29,24 +29,24 @@
     <form action="/auth-register" method="POST" class="container">
       <div class="mb-3">
         <label for="" class="form-label" >Name</label>
-        <input value="<%= name %>" name="name" type="text" class="form-control" id="" placeholder="Nama Anda">
+        <input value="<%=name%>" name="name" type="text" class="form-control" id="" placeholder="Nama Anda">
       </div>
       <div class="mb-3">
         <label for="" class="form-label" >Password</label>
-        <input value="<%= password %>" name="password" type="text" class="form-control" placeholder="****">
+        <input value="<%=password%>" name="password" type="text" class="form-control" placeholder="****">
       </div>
       <div class="mb-3">
         <label for="" class="form-label" >Email</label>
-        <input value="<%= email %>" name="email" type="email" class="form-control" id="" placeholder="Nama Anda">
+        <input value="<%=email%>" name="email" type="email" class="form-control" id="" placeholder="Nama Anda">
       </div>
       <div class="mb-3">
         <label for="" class="form-label" >Phone Number</label>
-        <input value="<%= telp %>" name="telp" type="tel" class="form-control" placeholder="telp">
+        <input value="<%=telp%>" name="telp" type="tel" class="form-control" placeholder="telp">
       </div>
       <div class="mb-3">
         <label class="form-label">Alamat</label>
         <textarea name="address" class="form-control">
-          <%= address %>
+          <%=address%>
         </textarea>
       </div>
       <button type="submit" class="btn btn-primary btn-submit-me mb-4">Sign Up</button>
