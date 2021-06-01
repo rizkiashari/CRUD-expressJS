@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const dbConnection = require('../lib/db');
 const {authCheck} = require("../middleware/auth");
+const { log } = require('debug');
 
 router.get("/", (req, res) => {
   res.render("home/home");
@@ -27,25 +28,26 @@ router.post("/auth-login", (req, res) => {
   if (!email.length || !password.length) {
     req.flash("error", "Silahkan isi semua data!!!");
     res.render("auth/login", {
-       email, password: "",
+       email,
     });
   }
 
   dbConnection.query(`SELECT * FROM user WHERE email = ?`, email, (error, data) => {
     if (error) throw error;
-
+    console.log(data);
     if (!data.length) {
       req.flash("error", "Email anda salah");
-      res.render("auth/login", { email , password: ""});
+      res.render("auth/login", { email ,});
     }
     else {
       bcrypt.compare(password, data[0].password, (err, result) => {
         if (err) throw err;
 
         if (!result) {
+          console.log(result);
           req.flash("error", "Password salah");
           res.render("auth/login", {
-            email, password: ""
+            email
           });
         } else {
           req.session.idUser = data[0].idUser;
